@@ -7,7 +7,7 @@
  
   
  <!-- Variables used for JUnit testin -->
-  <property name="cobertura.dir" location="cobertura" />
+  <!-- <property name="cobertura.dir" location="cobertura" /> -->
   <property name="dist.dir" location="dist" />
   <property name="docs.dir" location="docs" />
 
@@ -16,7 +16,7 @@
     <delete dir="${build.dir}" />
     <delete dir="${docs.dir}" />
     <delete dir="${dist.dir}" />
-	<delete dir="${cobertura.dir}" />
+	<!-- <delete dir="${cobertura.dir}" /> -->
   </target>
 
   <!-- Creates the  build, docs and dist directory-->
@@ -25,7 +25,7 @@
     <mkdir dir="${docs.dir}" />
     <mkdir dir="${dist.dir}" />
 	
-	<mkdir dir="${cobertura.dir}" />
+<!-- 	<mkdir dir="${cobertura.dir}" /> -->
   </target>
   
    <!-- ================================= 
@@ -45,13 +45,13 @@
 		<pathelement path="lib/org.springframework.transaction-3.0.0.RELEASE.jar"/>
 		<pathelement path="lib/org.springframework.web.struts-3.0.0.RELEASE.jar"/>
 		<pathelement path="lib/org.springframework.web-3.0.0.RELEASE.jar"/>-->
-		<pathelement path="lib/spring-context-3.0.0.RELEASE.jar.jar"/>
+		<pathelement path="lib/spring-context-3.0.0.RELEASE.jar"/>
 		<!--<pathelement path="lib/org.springframework.aop-3.0.0.RELEASE.jar"/> -->
 		<pathelement path="lib/spring-webmvc-3.0.5.RELEASE.jar"/>
 		
-		<pathelement path="lib/spring-web-3.0.5.RELEASE.jar"/>
+		<pathelement path="lib/org.springframework.web-3.1.2.RELEASE.jar"/>
 		<pathelement path="lib/spring-tx-4.1.4.RELEASE.jar"/>
-		
+		<pathelement path="lib/spring-core-3.0.5.RELEASE.jar"/>
 		<pathelement path="lib/persistence-api-1.0.jar"/>
 		<pathelement path="lib/junit-4.11.jar"/>
 		<pathelement path="lib/hamcrest-core-1.1.jar"/>
@@ -73,7 +73,7 @@
     <classpath>
      	<pathelement path="lib/junit-4.11.jar"/>
 		<pathelement path="lib/hamcrest-core-1.1.jar"/>
-		<pathelement path="lib/cobertura-2.0.3.jar"/>
+		<!-- <pathelement path="lib/cobertura-2.0.3.jar"/> -->
     	<pathelement location="${build.dir}" />
 	</classpath>
 
@@ -85,7 +85,7 @@
 	  </test>
 
   </junit>
-  <cobertura-report format="html" srcdir="${src.dir}" destdir="${test.report.dir}" />
+  <!-- <cobertura-report format="html" srcdir="${src.dir}" destdir="${test.report.dir}" /> -->
 </target>
   
   <target name="war" depends="compile, unittest">
