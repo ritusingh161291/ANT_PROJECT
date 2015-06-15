@@ -1,205 +1,95 @@
 <?xml version="1.0"?>
-<project xmlns:ivy="antlib:org.apache.ivy.ant" name="ANT_PRAC_EMS_WITH_DB" default="war" basedir=".">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="ems_ant_TEMP" default="war" basedir=".">
   <!-- Sets variables which can later be used. -->
   <!-- The value of a property is accessed via ${} -->
   <property name="src.dir" location="src" />
-    <property name="test.dir" location="src/test" />
   <property name="build.dir" location="bin" />
-  <property name="dist.dir" location="dist" />
-  <property name="lib.dir" location="lib" />
-  <property name="war-file-name" value="${project-name}.war" />
-  <property name="cobertura.dir" location="cobertura" />
-  
-	<!-- <property name="source-directory" value="src" />
-	<property name="classes-directory" value="bin" />
-	<property name="web-directory" value="web" />
-	<property name="web-xml-file" value="web/WEB-INF/web.xml" /> -->
-  <!-- 
-  <property file="build.properties" /> -->
-	
-	
-	<!-- <tstamp prefix="build-info">
-		<format property="current-date" pattern="d-MMMM-yyyy" locale="en" />
-		<format property="current-time" pattern="hh:mm:ss a z" locale="en" />
-		<format property="year-month-day" pattern="yyyy-MM-dd" locale="en" />
-	</tstamp>
-	<property name="build-directory" value="build" />
-
-	<property name="ftp-remotedir" value="uploaded-wars/${project-name}/${build-info.year-month-day}" /> -->
-
-	<!-- <taskdef name="start" classname="org.apache.catalina.ant.StartTask" />
-	<taskdef name="stop" classname="org.apache.catalina.ant.StopTask" />
-	<taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask" />
-	<taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask" />
-
-	<target name="stop" description="stop application in tomcat">
-		<stop url="${tomcat-manager-url}" username="${tomcat-manager-username}"
-			password="${tomcat-manager-password}" path="/${project-name}" />
-	</target> -->
-
-	<!-- <target name="start" description="start application in tomcat">
-		<start url="${tomcat-manager-url}" username="${tomcat-manager-username}"
-			password="${tomcat-manager-password}" path="/${project-name}" />
-	</target> -->
-	<!-- 
-	<target name="undeploy" description="undeploy from tomcat">
-		<undeploy 
-			failonerror="no"
-			url="${tomcat-manager-url}"
-			username="${tomcat-manager-username}"
-			password="${tomcat-manager-password}"
-			path="/${project-name}"
-		/>
-	</target> -->
-	
-	<!-- <target name="deploy" description="deploy to tomcat">
-		<echo>deploying from client</echo>
-		<deploy 
-			url="${tomcat-manager-url}"
-			username="${tomcat-manager-username}"
-			password="${tomcat-manager-password}"
-			path="/${project-name}"
-			war="file:/projects/workspace/${project-name}/${build-directory}/${war-file-name}"
-		/>
-	</target> -->
-	
-	<!-- <target name="war" depends="">
-		<mkdir dir="${build-directory}" />
-		<delete file="${build-directory}/${war-file-name}" />
-		<war warfile="${build-directory}/${war-file-name}" webxml="${web-xml-file}">
-			<classes dir="${classes-directory}" />
-			<fileset dir="${web-directory}"> -->
-				<!-- Need to exclude it since webxml is an attribute of the war tag above -->
-				<!-- <exclude name="WEB-INF/web.xml" />
-			</fileset>
-			<manifest>
-				<attribute name="Built-By" value="${builder}" />
-				<attribute name="Built-On" value="${build-info.current-date}" />
-				<attribute name="Built-At" value="${build-info.current-time}" />
-			</manifest>
-		</war>
-	</target> -->
-
-	<!-- <target name="ftp" depends="" description="upload war file to server">
-		<ftp 
-			server="${ftp-server}" remotedir="${ftp-remotedir}"
-			userid="${ftp-userid}" password="${ftp-password}"
-			action="mkdir" verbose="yes">
-		</ftp>
-		<ftp 
-			server="${ftp-server}" remotedir="${ftp-remotedir}"
-			userid="${ftp-userid}" password="${ftp-password}"
-			action="send" verbose="yes" depends="yes">
-			<fileset file="${build-directory}/${war-file-name}" />
-		</ftp>
-	</target> -->
-
-	<!-- <target name="mail-upload-complete">
-		<mail from="ant@cakelycakes.com"
-		      tolist="bigcakes@cakelycakes.com"
-		      subject="${war-file-name} was uploaded to the server"
-		      message="The ${war-file-name} file was uploaded to ${ftp-server} in ${ftp-remotedir}"/>
-	</target>
- -->
  
-	<!-- <target name="build-and-ftp" depends="war,ftp,mail-upload-complete" />
-	<target name="build-and-deploy" depends="war,undeploy,deploy" /> -->
   
-  <!-- <property name="docs.dir" location="docs" /> -->
+ <!-- Variables used for JUnit testin -->
+  <property name="cobertura.dir" location="cobertura" />
+  <property name="dist.dir" location="dist" />
+  <property name="docs.dir" location="docs" />
 
   <!-- Deletes the existing build, docs and dist directory-->
   <target name="clean">
     <delete dir="${build.dir}" />
-   <!--  <delete dir="${docs.dir}" /> -->
+    <delete dir="${docs.dir}" />
     <delete dir="${dist.dir}" />
+	<delete dir="${cobertura.dir}" />
   </target>
 
   <!-- Creates the  build, docs and dist directory-->
   <target name="makedir">
     <mkdir dir="${build.dir}" />
-   <!--  <mkdir dir="${docs.dir}" /> -->
+    <mkdir dir="${docs.dir}" />
     <mkdir dir="${dist.dir}" />
+	
+	<mkdir dir="${cobertura.dir}" />
   </target>
   
- <target name="resolve" description="--> retrieve dependencies with ivy">
+   <!-- ================================= 
+          target: resolve              
+         ================================= -->
+    <target name="resolve" description="--> retrieve dependencies with ivy">
         <ivy:retrieve />
     </target>
+
   <!-- Compiles the java code (including the usage of library for JUnit -->
   <target name="compile" depends="clean, makedir, resolve">
-   <javac srcdir="${src.dir}" destdir="${build.dir}">
-	
-	 <classpath> 
-	 <pathelement path="lib/spring-web-3.0.4.RELEASE.jar"/>
-	 <pathelement path="lib/spring-beans-3.0.0.RELEASE.jar"/>
-	 <pathelement path="lib/spring-context-3.0.0.RELEASE.jar"/>
-	 <pathelement path="lib/spring-webmvc-3.0.5.RELEASE.jar"/>
-	 <pathelement path="lib/persistence-api-1.0.jar"/>
-	 <pathelement path="lib/hibernate-3.2.6.ga.jar"/>
-	 <pathelement path="lib/spring-tx-4.1.4.RELEASE.jar"/>
-	 <pathelement path="lib/mockito-all-1.10.19.jar"/>
-	 <pathelement path="lib/spring-test-3.2.1.RELEASE.jar"/>
-	 <pathelement path="lib/junit-4.10.jar"/>
-	 <pathelement path="lib/mockito-core-1.10.19.jar"/>
-	 <pathelement path="lib/hamcrest-core-1.3.jar"/>
-	 <pathelement path="lib/cobertura-2.1.1.jar"/>
-	
-	 
-	
-	 
-	 
-	 
-	 
-	</classpath>
-	
+    <javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}">
+	<classpath>
+        <pathelement path="lib/spring-beans-3.0.0.RELEASE.jar"/>
+		<!--<pathelement path="lib/org.springframework.core-3.0.0.RELEASE.jar"/>
+		<pathelement path="lib/org.springframework.jdbc-3.0.0.RELEASE.jar"/>
+		<pathelement path="lib/org.springframework.transaction-3.0.0.RELEASE.jar"/>
+		<pathelement path="lib/org.springframework.web.struts-3.0.0.RELEASE.jar"/>
+		<pathelement path="lib/org.springframework.web-3.0.0.RELEASE.jar"/>-->
+		<pathelement path="lib/spring-context-3.0.0.RELEASE.jar.jar"/>
+		<!--<pathelement path="lib/org.springframework.aop-3.0.0.RELEASE.jar"/> -->
+		<pathelement path="lib/spring-webmvc-3.0.5.RELEASE.jar"/>
+		
+		<pathelement path="lib/spring-web-3.0.5.RELEASE.jar"/>
+		<pathelement path="lib/spring-tx-4.1.4.RELEASE.jar"/>
+		
+		<pathelement path="lib/persistence-api-1.0.jar"/>
+		<pathelement path="lib/junit-4.11.jar"/>
+		<pathelement path="lib/hamcrest-core-1.1.jar"/>
+		
+		
+		<!-- <pathelement path="lib/hibernate-annotations-3.4.0.GA.jar"/>
+		<pathelement path="lib/commons-collections-3.2.1.jar"/>
+		<pathelement path="lib/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+		<pathelement path="lib/servlet-api-2.3.jar"/> -->
+		<pathelement path="lib/hibernate-3.2.6.ga.jar"/>
+    </classpath>
     </javac>
-
   </target>
   
-
-  <!-- Creates Javadoc -->
- <!--  <target name="docs" depends="compile">
-    <javadoc packagenames="src" sourcepath="${src.dir}" destdir="${docs.dir}">
-      Define which files / directory should get included, we include all
-       <fileset dir="${src.dir}">
-                <include name="**" />
-           </fileset>
-    </javadoc>
-  </target> -->
- <path id="junit.class.path">
-	<pathelement location="lib/junit-4.11.jar" /> 
-	<pathelement path="lib/hamcrest-core-1.1.jar"/>
-	<pathelement location="${build.dir}" />
- </path>
- <target name="unittest" depends="resolve">
+  
+  <target name="unittest" depends="resolve">
 		<junit printsummary="yes" haltonfailure="yes">
 
-     <classpath refid="junit.class.path"/>
-     	<!-- <pathelement path="lib/junit-4.10.jar"/>
+    <classpath>
+     	<pathelement path="lib/junit-4.11.jar"/>
 		<pathelement path="lib/hamcrest-core-1.1.jar"/>
 		<pathelement path="lib/cobertura-2.0.3.jar"/>
-		<pathelement location="${test.dir}" />
-    	<pathelement location="${test.dir}" /> -->
-	<classpath> 
-		<pathelement location="${test.dir}"/> 
-</classpath>
-	 <formatter type="plain"/>
+    	<pathelement location="${build.dir}" />
+	</classpath>
+
+   <test name="test.java.TestJunit"
+             haltonfailure="no" outfile="result">
+
+      <formatter type="plain"/>
       <formatter type="xml"/>
-	  <batchtest fork="yes" >
-		<fileset dir="${test.dir}">
-			<include name="**/*Test.java" />
-		</fileset>
-	</batchtest>
- 
+	  </test>
 
   </junit>
-  <!-- <cobertura-report format="html" srcdir="${src.dir}" destdir="${test.report.dir}" /> -->
-
-
+  <cobertura-report format="html" srcdir="${src.dir}" destdir="${test.report.dir}" />
 </target>
-
-  <!--Creates the deployable jar file  -->
-  <target name="war" depends="compile">
-    <war destfile="dist/ANT_PRAC_EMS_WITH_DB.war" webxml="src/main/webapp/WEB-INF/web.xml">
+  
+  <target name="war" depends="compile, unittest">
+    <war destfile="dist/ems_ant_TEMP.war" webxml="src/main/webapp/WEB-INF/web.xml">
 		<classes dir="bin"/>
         <fileset dir="src/main/webapp">
 		<exclude name="WEB-INF/web.xml"/>
@@ -209,5 +99,5 @@
         
     </war>
 </target>
+  </project>
   
-</project> 
