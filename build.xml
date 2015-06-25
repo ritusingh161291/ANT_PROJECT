@@ -4,12 +4,7 @@
   <!-- The value of a property is accessed via ${} -->
   <property name="src.dir" location="src" />
   <property name="build.dir" location="bin" />
- 
-  
-  
-  
-  
-  
+
   
   
  <!-- Variables used for JUnit testin -->
