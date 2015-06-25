@@ -6,6 +6,10 @@
   <property name="build.dir" location="bin" />
  
   
+  
+  
+  
+  
  <!-- Variables used for JUnit testin -->
   <!-- <property name="cobertura.dir" location="cobertura" /> -->
   <property name="dist.dir" location="dist" />
@@ -24,6 +28,9 @@
     <mkdir dir="${build.dir}" />
     <mkdir dir="${docs.dir}" />
     <mkdir dir="${dist.dir}" />
+	
+	
+	
 	
 <!-- 	<mkdir dir="${cobertura.dir}" /> -->
   </target>
