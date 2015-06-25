@@ -7,6 +7,9 @@
 		<dependency org="org.springframework" name="spring-jdbc" rev="4.0.5.RELEASE"/>
 		<dependency org="org.springframework" name="spring-beans" rev="4.1.4.RELEASE"/>
 		
+		
+		
+		
 		<!-- <dependency org="org.springframework" name="spring-tx" rev="4.1.4.RELEASE"/>
 		<dependency org="org.springframework" name="spring-web" rev="3.0.5.RELEASE"/> -->
 		<dependency org="org.springframework.batch" name="spring-batch-core" rev="3.0.2.RELEASE"/>
@@ -18,6 +21,9 @@
 		<dependency org="commons-io" name="commons-io" rev="2.4"/>
 		<dependency org="jstl" name="jstl" rev="1.2"/>
 		<dependency org="taglibs" name="standard" rev="1.1.2"/>
+		
+		
+		
 		
 		<dependency org="junit" name="junit" rev="4.11"/>
 		<dependency org="org.slf4j" name="slf4j-simple" rev="1.6.1"/>
