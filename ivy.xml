@@ -1,6 +1,8 @@
 <ivy-module version="2.0">
     <info organisation="org.apache" module="ANT_PRAC_EMS_WITH_DB"/>
     <dependencies>
+    	
+    	
 		<dependency org="org.springframework" name="spring-core" rev="3.0.5.RELEASE"/>
 		<dependency org="org.springframework" name="spring-jdbc" rev="4.0.5.RELEASE"/>
 		<dependency org="org.springframework" name="spring-beans" rev="4.1.4.RELEASE"/>
@@ -19,5 +21,7 @@
 		
 		<dependency org="junit" name="junit" rev="4.11"/>
 		<dependency org="org.slf4j" name="slf4j-simple" rev="1.6.1"/>
+		
+		
     </dependencies>
 </ivy-module>
